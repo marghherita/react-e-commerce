@@ -1,23 +1,29 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Card from './../src/Components/Card'
+import { useState, useEffect } from "react";
+
+const dataCard = [] ;
 
 function App() {
+
+  const [cardData, setCardData] = useState(dataCard);
+  
+  useEffect(() => {
+
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((data) => setCardData(data));
+
+  }, []);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+  {cardData.map((card, index) => (
+    <Card key={index} data={card}/>
+  ))}
+  <Card title='ciao'/>
     </div>
   );
 }
